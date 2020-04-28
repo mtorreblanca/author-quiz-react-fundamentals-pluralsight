@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "./logo.svg";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import "./App.css";
 import "./bootstrap.min.css";
 import PropTypes from "prop-types";
@@ -67,8 +67,21 @@ Turn.propTypes = {
   onAnswerSelected: PropTypes.func.isRequired,
   highlight: PropTypes.string.isRequired,
 };
-const Continue = (props) => {
-  return <div></div>;
+const Continue = ({ show, onContinue }) => {
+  return (
+    <div className="row continue">
+      {show ? (
+        <div className="col-11">
+          <button
+            className="btn btn-primary btn-lg float-right"
+            onClick={onContinue}
+          >
+            Continue
+          </button>
+        </div>
+      ) : null}
+    </div>
+  );
 };
 
 const Footer = (props) => {
@@ -82,7 +95,7 @@ const Footer = (props) => {
   );
 };
 
-function AuthorQuiz({ turnData, highlight, onAnswerSelected }) {
+function AuthorQuiz({ turnData, highlight, onAnswerSelected, onContinue }) {
   return (
     <div className="container-fluid">
       <Hero />
@@ -91,8 +104,10 @@ function AuthorQuiz({ turnData, highlight, onAnswerSelected }) {
         highlight={highlight}
         onAnswerSelected={onAnswerSelected}
       />
-      <p><Link to="/add">Add Author</Link></p>
-      <Continue />
+      <p>
+        <Link to="/add">Add Author</Link>
+      </p>
+      <Continue show={highlight === "correct"} onContinue={onContinue} />
       <Footer />
     </div>
   );
